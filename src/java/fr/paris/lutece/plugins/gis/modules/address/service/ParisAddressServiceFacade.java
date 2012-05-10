@@ -60,8 +60,11 @@ public class ParisAddressServiceFacade implements IAddressServiceFacade
 	public String getInverseGeolocalization(HttpServletRequest request, LonLat lonLat, String strSRID) 
 			throws RemoteException 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Adresse adresse = AddressServiceProvider.inverseGeolocalization(request, lonLat, strSRID);
+		
+		if ( adresse == null){ return ""; } // no results
+		
+		return getLabelAddress(adresse);
 	}
 	
 	/**
@@ -88,8 +91,8 @@ public class ParisAddressServiceFacade implements IAddressServiceFacade
         }
         addressBuilder.append(CONSTANT_ONE_SPACE)
 		  			  .append(address.getNomVoie(  ))
-		  			  .append(CONSTANT_ONE_SPACE)
-		  			  .append(address.getCommune(  ));
+		  			  .append("/")
+		  			  .append(getAddressLonLat(address.getGeometry(  )));
         
         return addressBuilder.toString();
 	}

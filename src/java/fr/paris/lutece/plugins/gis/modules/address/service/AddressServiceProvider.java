@@ -1,6 +1,7 @@
 package fr.paris.lutece.plugins.gis.modules.address.service;
 
 import fr.paris.lutece.plugins.address.business.jaxb.wsSearchAdresse.Adresse;
+import fr.paris.lutece.plugins.gis.business.LonLat;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 
@@ -34,5 +35,10 @@ public final class AddressServiceProvider
    {
 		return gisAddressService.searchAddress(request, address, SRID);
    }
-
+	
+	public static Adresse inverseGeolocalization( HttpServletRequest request, LonLat coord, String SRID) 
+    		throws RemoteException
+   {
+		return gisAddressService.inverseGeolocalization(request, coord, SRID);
+   }
 }

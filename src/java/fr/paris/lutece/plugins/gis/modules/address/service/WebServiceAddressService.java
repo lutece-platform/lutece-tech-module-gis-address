@@ -4,12 +4,19 @@ import fr.paris.lutece.plugins.address.business.axis.AdresseService;
 import fr.paris.lutece.plugins.address.business.axis.AdresseServiceLocator;
 import fr.paris.lutece.plugins.address.business.axis.AdresseServicePortType;
 import fr.paris.lutece.plugins.address.business.jaxb.wsSearchAdresse.Adresses;
+import fr.paris.lutece.plugins.gis.business.LonLat;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
 import org.apache.axis.client.Stub;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+import java.io.IOException;
 import java.io.StringReader;
 
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -24,6 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.rpc.ServiceException;
 import javax.xml.transform.stream.StreamSource;
 
@@ -134,6 +144,102 @@ public class WebServiceAddressService implements IAddressService
         	setAddresses.addAll(listAdresses);
         }
         return setAddresses;
+    }
+    
+    
+    /**
+     * @throws RemoteException the RemoteExecption
+     * @param strSRID the srsid
+     * @param request Request
+     * @param coord LonLat of the point
+     * @return the XML flux of closest address corresponding
+     */
+    public fr.paris.lutece.plugins.address.business.jaxb.wsSearchAdresse.Adresse inverseGeolocalization( HttpServletRequest request, LonLat coord, String SRID) 
+    		throws RemoteException
+    {
+        String responseWebService = null;
+        AdresseService adresseService = new AdresseServiceLocator(  );
+        try
+        {
+            URL urlWS = null;
+
+            Stub portType = null;
+
+            String strUrlWS = this.getUrlWS(  );
+            if ( (  strUrlWS == null ) || strUrlWS.equals( "" ) )
+            {
+                portType = (Stub) adresseService.getAdresseServiceHttpPort(  );
+            }
+            else
+            {
+                try
+                {
+                    urlWS = new URL( strUrlWS );
+                }
+                catch ( MalformedURLException e )
+                {
+                    AppLogService.error( e.getMessage(  ), e );
+                }
+
+                portType = (Stub) adresseService.getAdresseServiceHttpPort( urlWS );
+            }
+
+            portType.setUsername( getUserName(  ) );
+            portType.setPassword( getPassword(  ) );
+
+            setTimeout( portType );
+
+            responseWebService = ( (AdresseServicePortType) portType ).inverseGeolocalization( getDefaultCity(  ), 
+            		coord.getLongitude(), coord.getLatitude(), SRID, getDateSearch(  ) );
+            
+            
+            // check null result and then return null list
+            if ( responseWebService == null )
+            {
+                return null;
+            }
+        }
+        catch ( ServiceException e )
+        {
+            AppLogService.error( e.getMessage(  ), e );
+        }
+
+        //traitement du flux xml		
+        fr.paris.lutece.plugins.address.business.jaxb.wsSearchAdresse.Adresse adresse = new fr.paris.lutece.plugins.address.business.jaxb.wsSearchAdresse.Adresse();
+        
+        try
+        {
+        	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        	Document document = parser.parse(new InputSource(new StringReader(responseWebService)));
+ 
+			//Get data corresponding to the address
+        	String identifiant = ((Element)document.getElementsByTagName("identifiant").item(0)).getTextContent();
+        	String geometry = ((Element)document.getElementsByTagName("geometry").item(0)).getTextContent();
+        	String numero = ((Element)document.getElementsByTagName("numero").item(0)).getTextContent();
+        	String typeVoie = ((Element)document.getElementsByTagName("typeVoie").item(0)).getTextContent();
+        	String nomVoie = ((Element)document.getElementsByTagName("nomVoie").item(0)).getTextContent();
+        	String commune = ((Element)document.getElementsByTagName("commune").item(0)).getTextContent();
+			
+        	
+        	adresse.setIdentifiant(new BigInteger(identifiant));
+        	adresse.setGeometry(geometry);
+        	adresse.setNumero(new Short(numero));
+        	adresse.setTypeVoie(typeVoie);
+        	adresse.setNomVoie(nomVoie);
+        	adresse.setCommune(commune);
+        }
+        catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return adresse;
     }
 
     /**
