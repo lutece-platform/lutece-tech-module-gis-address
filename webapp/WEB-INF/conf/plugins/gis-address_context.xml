@@ -12,4 +12,6 @@
   	 <property name="timeOut" value="10000"/>	<!-- 1000 = 1 second -->
   </bean>
 
+  <bean id="adresseServiceFacade"  class="fr.paris.lutece.plugins.gis.modules.address.service.ParisAddressServiceFacade" />
+	
 </beans>
