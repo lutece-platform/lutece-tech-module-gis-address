@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>module-gis-address</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Lutece GIS module for address geolocalization</name>
     
     <repositories>
@@ -46,9 +46,9 @@
     </properties>
     
     <scm>
-        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/module-gis-address</connection>
-        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/module-gis-address</developerConnection>
-        <url>http://dev.lutece.paris.fr/wsvn/lutece/portal/trunk/plugins/technical/module-gis-address/</url>
+        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/tags/module-gis-address-1.0.0</connection>
+        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/tags/module-gis-address-1.0.0</developerConnection>
+        <url>http://dev.lutece.paris.fr/wsvn/lutece/portal/tags/module-gis-address-1.0.0</url>
     </scm>
     
 </project>
