@@ -4,7 +4,7 @@
 <beans>
   
   <bean id="gisAdresseService"  class="fr.paris.lutece.plugins.gis.modules.address.service.WebServiceAddressService">
-  	 <property name="urlWS" value="http://slnxtmma4.matt.fr.sopra:8081/AdressesAdmin-2.9/services/AdresseService"/>
+  	 <property name="urlWS" value="http://svlnxtmma2.matt.fr.sopra:8080/AdressesServices-2.8e/services/AdresseService"/>
   	 <property name="defaultCity" value="paris"/>
   	 <property name="dateSearch" value="20120503"/>
   	 <property name="userName" value="admin"/>
