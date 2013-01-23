@@ -25,7 +25,7 @@ public class ParisAddressServiceFacade implements IAddressServiceFacade
 	 * {@inheritDoc}
 	 */
 	public LonLat getGeolocalization(final HttpServletRequest request, String address, String strSRID)
-			throws RemoteException 
+			throws RemoteException, IllegalArgumentException 
 	{	
 		Set<Adresse> setAddresses = AddressServiceProvider.searchAddress(request, address, strSRID);
 
@@ -41,7 +41,10 @@ public class ParisAddressServiceFacade implements IAddressServiceFacade
 		{
 				Adresse currentAddress = iterator.next();				
 				String comparedAddress = getLabelAddress(currentAddress).replace(" ","");
-				int currentCompareTo = Math.abs(comparedAddress.compareToIgnoreCase(trimedAddress));
+
+//				int currentCompareTo = Math.abs(comparedAddress.compareToIgnoreCase(trimedAddress));
+				int currentCompareTo = Math.abs(StringUtils.getLevenshteinDistance(comparedAddress, trimedAddress));
+				
 				if( currentCompareTo < bestAddressMatchCompareTo  )
 				{
 					bestMatchAddress = currentAddress;
