@@ -4,12 +4,12 @@
 <beans>
   
   <bean id="gisAdresseService"  class="fr.paris.lutece.plugins.gis.modules.address.service.WebServiceAddressService">
-  	 <property name="urlWS" value="http://svlnxtmma2.matt.fr.sopra:8080/AdressesServices-2.8e/services/AdresseService"/>
-  	 <property name="defaultCity" value="paris"/>
-  	 <property name="dateSearch" value="20120503"/>
-  	 <property name="userName" value="admin"/>
-  	 <property name="password" value="admin"/>
-  	 <property name="timeOut" value="10000"/>	<!-- 1000 = 1 second -->
+  	 <property name="urlWS" value="http://P89-WS.apps.paris.mdp:8162/AdressesServices-1.0/services/AdresseService"/>
+	<property value="paris" name="defaultCity"/>
+	<property value="20120503" name="dateSearch"/>
+	<property value="I53_SOND" name="userName"/>
+	<property value="I53_SOND" name="password"/>
+	<property value="10000" name="timeOut"/>	<!-- 1000 = 1 second -->
   </bean>
 
   <bean id="adresseServiceFacade"  class="fr.paris.lutece.plugins.gis.modules.address.service.ParisAddressServiceFacade" />
