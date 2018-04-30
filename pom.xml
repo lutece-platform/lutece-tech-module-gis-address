@@ -1,17 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  
     <parent>
-        <artifactId>lutece-plugins-pom</artifactId>
-        <groupId>fr.paris.lutece.plugins</groupId>
-        <version>3.7</version>
+        <artifactId>lutece-global-pom</artifactId>
+        <groupId>fr.paris.lutece.tools</groupId>
+        <version>3.0.12</version>
     </parent>
-    
     <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-gis-address</artifactId>
     <packaging>lutece-plugin</packaging>
     <version>1.0.2-SNAPSHOT</version>
     <name>Lutece GIS module for address geolocalization</name>
-    
     <repositories>
         <repository>
             <id>lutece</id>
@@ -20,35 +18,28 @@
             <layout>default</layout>
         </repository>
     </repositories>
-    
     <dependencies>
-    
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>plugin-gis</artifactId>
             <version>[2.0.0-SNAPSHOT,3.0.0-SNAPSHOT)</version>
             <type>lutece-plugin</type>
         </dependency>
-        
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>plugin-address</artifactId>
             <version>[1.0.5,2.0.0-SNAPSHOT)</version>
             <type>lutece-plugin</type>
-        </dependency> 
-           
+        </dependency>
     </dependencies>
-    
     <properties>
         <componentName>gis-address</componentName>
         <jiraProjectName>GISADDRESS</jiraProjectName>
         <jiraComponentId>10660</jiraComponentId>
     </properties>
-    
     <scm>
-        <connection>scm:svn:http://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/module-gis-address</connection>
-        <developerConnection>scm:svn:https://dev.lutece.paris.fr/svn/lutece/portal/trunk/plugins/technical/module-gis-address</developerConnection>
-        <url>http://dev.lutece.paris.fr/wsvn/lutece/portal/trunk/plugins/technical/module-gis-address/</url>
+        <connection>scm:git:https://github.com/lutece-platform/lutece-tech-module-gis-address.git</connection>
+        <developerConnection>scm:git:https://github.com/lutece-platform/lutece-tech-module-gis-address.git</developerConnection>
+        <url>https://github.com/lutece-platform/lutece-tech-module-gis-address.git</url>
     </scm>
-    
 </project>
